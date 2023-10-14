@@ -8,8 +8,8 @@ public class Main{
 	public static void main(String[] args){
 		Scanner sc = new Scanner(System.in);
 		int n = sc.nextInt();
-		floor = new int[310];
-		dp = new int[310];
+		floor = new int[301];
+		dp = new int[301];
 		for(int i = 1; i <= n; i++) {
 			floor[i] = sc.nextInt();
 		}
