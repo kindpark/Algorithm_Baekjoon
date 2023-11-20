@@ -1,60 +1,52 @@
 import java.io.*;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.StringTokenizer;
+import java.util.*;
 
 public class Main {
-	static int n;
-	static long[] elements, index, tree;
-	public static void main(String[] args) throws IOException{
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		
-		n = Integer.parseInt(br.readLine());
-		elements = new long[n];
-		StringTokenizer st = new StringTokenizer(br.readLine());
-		for(int i=0; i<n; i++) {
-			elements[i] = Integer.parseInt(st.nextToken());
-		}
-		Map<Long, Integer> pos = new HashMap<>();
-		for(int i=0; i<n; i++) {
-			pos.put(elements[i], i);
-		}
-		index = elements.clone();
-		Arrays.sort(index);	
-		tree = new long[getTreeSize()];
-		long ans =0;
-		for(int i=0; i<n; i++)	{
-			int idx = pos.get(index[i]);
-			ans += sum(0, n-1, 1, idx+1, n-1);
-			update(0, n-1, 1, idx, 1);	
-		}
-		System.out.println(ans);
-	}
-	
-	public static int getTreeSize() {
-		int h = (int)Math.ceil(Math.log(n)/Math.log(2))+1;
-		return (int)Math.pow(2, h)-1;
-	}
-	
-	public static long sum(int start, int end, int node, int left, int right) {
-		if(end < left || right < start ) return 0;
-		if(left <= start && end <= right) return tree[node];
-		
-		int mid = (start+end)/2;
-		return sum(start, mid, node*2, left, right) + sum(mid+1, end, node*2+1, left, right);
-	}
-	
-	public static void update(int start, int end, int node, int idx, int dif) {
-		if(start == end ) {
-			tree[node] = dif;
-			return;
-		}
-		int mid = (start+end)/2;
-		if(idx <= mid) update(start, mid, node*2, idx, dif);
-		else update(mid+1, end, node*2+1, idx, dif);
-		
-		tree[node] = tree[node*2]+tree[node*2+1];
-	}
-	
+    static int N;
+    static int[] arr;
+    static long ans = 0;
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        N = Integer.parseInt(br.readLine());
+        arr = new int[N];
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        for (int i = 0; i < N; i++) {
+            arr[i] = Integer.parseInt(st.nextToken());
+        }
+        mergeSort(0, arr.length - 1);
+       System.out.println(ans);
+    }
+
+    public static void mergeSort(int left, int right) {
+        if (left < right) {
+            int mid = (left + right) >> 1;
+            mergeSort(left, mid);
+            mergeSort(mid + 1, right);
+            unit(left, mid, right);
+        }
+    }
+
+    public static void unit(int left, int mid, int  right) {
+        int[] leftArr = Arrays.copyOfRange(arr, left, mid + 1);
+        int[] rightArr = Arrays.copyOfRange(arr, mid + 1, right + 1);
+        int index = left, leftIdx = 0, rightIdx = 0, cnt = leftArr.length;
+
+        while (leftIdx < leftArr.length && rightIdx < rightArr.length) {
+            if (leftArr[leftIdx] > rightArr[rightIdx]) {
+                arr[index] = rightArr[rightIdx++];
+                ans += cnt;
+            } else {
+                arr[index] = leftArr[leftIdx++];
+                cnt--;
+            }
+            index++;
+        }
+
+        while (rightIdx < rightArr.length) {
+            arr[index++] = rightArr[rightIdx++];
+        }
+        while (leftIdx < leftArr.length) {
+            arr[index++] = leftArr[leftIdx++];
+        }
+    }
 }
