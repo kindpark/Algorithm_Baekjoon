@@ -1,7 +1,7 @@
 import java.io.*;
 
 import java.util.StringTokenizer;
-
+//[참고] 자바 문제 6) 제곱 ㄴㄴ 수 - BAEKJOON 1016|작성자 repid2
  
 
 public class Main {
@@ -96,4 +96,3 @@ public class Main {
     }
 
 }
-//[참고] 자바 문제 6) 제곱 ㄴㄴ 수 - BAEKJOON 1016|작성자 repid2
