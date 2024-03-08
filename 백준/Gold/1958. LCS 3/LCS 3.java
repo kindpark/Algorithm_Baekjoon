@@ -1,10 +1,11 @@
 import java.util.*;
+import java.io.*;
 public class Main {
-	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
+	public static void main(String[] args) throws IOException{
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		String[] s = new String[3];
 		for(int i = 0; i < s.length; i++) {
-			s[i] = sc.nextLine();
+			s[i] = br.readLine();
 		}
 		int[][][] dp = new int[s[0].length()+1][s[1].length()+1][s[2].length()+1];
 		for(int i = 1; i <= s[0].length(); i++) {
