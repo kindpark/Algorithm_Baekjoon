@@ -1,27 +1,29 @@
-import java.util.Scanner;
-
+import java.util.*;
+import java.io.*;
 public class Main {
-	public static void main(String[] args) {
-		Scanner in= new Scanner(System.in);
-		int N = in.nextInt();
-		int M = in.nextInt();
-		int[] arr = new int[N];
-		for(int i = 0; i < N; i++) {
-			arr[i] = in.nextInt();
+	public static void main(String[] args) throws IOException{
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer st = new StringTokenizer(br.readLine());
+		int n = Integer.parseInt(st.nextToken());
+		int m = Integer.parseInt(st.nextToken());
+		int res = 0;
+		int[] a = new int[n+1];
+		st = new StringTokenizer(br.readLine());
+		for(int i = 1; i <= n; i++) {
+			a[i] = Integer.parseInt(st.nextToken());
 		}
-		int r = 0;
-		for(int i = 0; i < N; i++) {
-			int res = 0;
-			for(int j = i; j < N; j++) {
-				res+=arr[j];
-				if(res== M) {
-					r++;
+		for(int i = 1; i <= n; i++) {
+			int sum = 0;
+			for(int j = i; j<=n; j++) {
+				sum += a[j];
+				if(sum == m) {
+					res++;
 				}
-				else if(res > 10) {
+				else if(sum > 10){
 					continue;
 				}
 			}
 		}
-		System.out.println(r);
+		System.out.println(res);
 	}
 }
