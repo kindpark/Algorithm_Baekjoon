@@ -39,7 +39,7 @@ public class Main {
 				continue;
 			}
 			if(map[x][y] > map[mx][my]) {
-				//다음 칸으로
+				//취합
 				dp[x][y] += dfs(mx, my); 
 			}
 		}
