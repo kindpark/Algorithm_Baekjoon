@@ -1,15 +1,14 @@
 import java.util.*;
-import java.io.*;
 public class Main {
 	static int n;
 	static char[] grammer;
 	static int[] check;
-	public static void main(String[] args) throws IOException{
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		n = Integer.parseInt(br.readLine());
+	public static void main(String[] args){
+        Scanner sc = new Scanner(System.in);
+		n = sc.nextInt();
 		check = new int[26];
 		for(int i = 0; i < n; i++) {
-			String g = br.readLine();
+			String g = sc.next();
 			grammer = new char[g.length()];
 			for(int j = 0; j < g.length(); j++) {
 				check[g.charAt(j) - 'a']++;
