@@ -1,14 +1,16 @@
 import java.util.*;
+import java.io.*;
 public class Main {
 	static int n;
 	static char[] grammer;
 	static int[] check;
-	public static void main(String[] args){
-        Scanner sc = new Scanner(System.in);
-		n = sc.nextInt();
+	static StringBuilder sb = new StringBuilder();
+	public static void main(String[] args) throws IOException{
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		n = Integer.parseInt(br.readLine());
 		check = new int[26];
 		for(int i = 0; i < n; i++) {
-			String g = sc.next();
+			String g = br.readLine();
 			grammer = new char[g.length()];
 			for(int j = 0; j < g.length(); j++) {
 				check[g.charAt(j) - 'a']++;
@@ -16,10 +18,11 @@ public class Main {
 			dfs(g.length(), 0);
 			Arrays.fill(check, 0);
 		}
+		System.out.println(sb.toString());
 	}
 	public static void dfs(int length, int x) {
 		if(x == length) {
-			System.out.println(grammer);
+			sb.append(grammer).append('\n');
 			return;
 		}
 		else {
