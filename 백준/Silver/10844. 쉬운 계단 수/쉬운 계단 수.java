@@ -1,36 +1,32 @@
-import java.util.*;
 import java.io.*;
 public class Main {
-	static long mod = 1000000000;
-	public static void main(String[] args) throws IOException{
+	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-		
+		long mod = 1000000000;
 		int n = Integer.parseInt(br.readLine());
-		long ans = 0;
-		//두번째 배열 : 마지막 자릿수
+		long res = 0;
 		long[][] r = new long[n+1][11];
-		
 		for(int i = 1; i <= 9; i++) {
-			r[1][i]++;
+			r[1][i] = 1;
 		}
 		for(int i = 2; i <= n; i++) {
-			for(int j = 0; j<= 9; j++) {
-				//0이나 9나 결국 1개
+			for(int j = 0; j < 10; j++) {
 				if(j == 0) {
-					r[i][j] = r[i-1][j+1]%mod;
+					r[i][j] = r[i-1][j+1] % mod;
 				}
 				else if(j == 9) {
 					r[i][j] = r[i-1][j-1] % mod;
 				}
 				else {
-					r[i][j] = (r[i-1][j-1]+r[i-1][j+1]) % mod;
+					r[i][j] = (r[i-1][j-1] + r[i-1][j+1]) % mod;
 				}
 			}
 		}
-		for(int i = 0; i <= 9; i++) {
-			ans = (ans + r[n][i]) % mod;
+		for(int i = 0; i <10; i++) {
+			res = (res + r[n][i]) % mod;
 		}
-		System.out.println(ans);
+		bw.write(String.valueOf(res));
+		bw.flush();
 	}
 }
