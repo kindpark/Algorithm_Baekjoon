@@ -16,6 +16,7 @@ public class Main {
 		}
 		for(int i = 2; i <= n; i++) {
 			for(int j = 0; j<= 9; j++) {
+				//0이나 9나 결국 1개
 				if(j == 0) {
 					r[i][j] = r[i-1][j+1]%mod;
 				}
