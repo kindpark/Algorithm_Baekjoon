@@ -1,37 +1,53 @@
-import java.util.*;
+//공부용으로 특정 소스 참고함
 import java.io.*;
+import java.util.*;
 public class Main {
-	public static void main(String[] args) throws IOException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+	static int[] v;
+	public static void main(String[] args) throws IOException{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
 		int n = Integer.parseInt(br.readLine());
+		int[] norm = new int[n];
 		int[] arr = new int[n];
-		HashMap<Integer, Integer> hm = new HashMap<>();
-		StringTokenizer st = new StringTokenizer(br.readLine());
-		for(int i = 0; i < n; i++) {
-			hm.put(Integer.parseInt(st.nextToken()), i);
-		}		
+		v = new int[n+1];
+		int length=0, idx=0;
+		StringTokenizer st = new StringTokenizer(br.readLine());		
+		for(int i=0; i<n; i++) {
+			norm[i] = Integer.parseInt(st.nextToken());
+		}
+		
 		st = new StringTokenizer(br.readLine());
-		for(int i = 0; i < n; i++) {
-			arr[i] = hm.get(Integer.parseInt(st.nextToken()));
+		for(int i=0; i<n; i++) {
+			int num =  Integer.parseInt(st.nextToken());
+			arr[num-1] = i;
 		}
-		LinkedList<Integer> list = new LinkedList<>();
-		for(int i : arr) {
-			if(list.isEmpty()) {
-				list.add(i);
-			}
-			else if(list.getLast() < i) {
-				list.add(i);
-			}
-			else {
-                //맞는것 끼리 이진 탐색
-				int a = -Collections.binarySearch(list, i)-1;
-				list.set(a, i);
+		
+		int[] res = new int[n];
+		for(int i=0; i<n ;i++) {
+			res[i] = arr[norm[i]-1]+1;
+		}
+		for(int i=0; i<n; i++) {
+			if(res[i] > v[length]) {
+				length +=1;
+				v[length] = res[i];
+			}else {
+				idx = binarySearch(0, length, res[i]);
+				v[idx] = res[i];
 			}
 		}
-		bw.write(String.valueOf(list.size()));
-		bw.flush();
-		bw.close();
+		System.out.println(length);
 		br.close();
+	}
+	//이분 탐색https://velog.io/@kimdukbae/%EC%9D%B4%EB%B6%84-%ED%83%90%EC%83%89-%EC%9D%B4%EC%A7%84-%ED%83%90%EC%83%89-Binary-Search
+	static int binarySearch(int left, int right, int key) {
+		int mid =0;
+		while(left<right) {
+			mid = (left+right)/2;
+			if(v[mid] < key) {
+				left = mid+1;
+			}else {
+				right = mid;
+			}
+		}
+		return right;
 	}
 }
