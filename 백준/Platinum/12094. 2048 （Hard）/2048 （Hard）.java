@@ -1,24 +1,23 @@
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.util.StringTokenizer;
+import java.io.*;
+import java.util.*;
 
-public class Main {
-    
-    static int n, answer, map[][];
-    
-    public static void main(String[] args) throws Exception {
+public class Main {  
+    static int n, answer, map[][]; 
+    public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         n = Integer.parseInt(br.readLine());
         answer = 0;
         map = new int[n][n];
-        StringTokenizer stz;
+        String[] st;
         for(int i = 0; i < n; i++) {
-            stz = new StringTokenizer(br.readLine());
+            st = br.readLine().split(" ");
             for(int j = 0; j < n; j++)
-                map[i][j] = Integer.parseInt(stz.nextToken());
+                map[i][j] = Integer.parseInt(st[j]);
         }
         game(0);
-        System.out.println(answer);
+        bw.write(String.valueOf(answer));
+        bw.flush();
     }
     
     public static void game(int count) {
