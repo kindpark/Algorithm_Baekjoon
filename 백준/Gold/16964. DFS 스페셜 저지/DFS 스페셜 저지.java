@@ -1,64 +1,57 @@
-import java.io.*;
 import java.util.*;
-
+import java.io.*;
 public class Main {
-    static boolean[] visit;
-    static int n;
-    static int[] expect;
-    static ArrayList<ArrayList<Integer>> info;
-    static int[] parent;
-
-    public static void main(String[] args) throws NumberFormatException, IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
-        n = Integer.parseInt(br.readLine());
-        info = new ArrayList<>();
-        visit = new boolean[n + 1];
-        expect = new int[n + 1];
-        parent = new int[n + 1];
-
-        for (int i = 0; i < n + 1; i++) {
-            info.add(new ArrayList<>());
-        }
-
-        for (int i = 0; i < n - 1; i++) {
-            StringTokenizer st = new StringTokenizer(br.readLine());
-            int from = Integer.parseInt(st.nextToken());
-            int to = Integer.parseInt(st.nextToken());
-            info.get(from).add(to);
-            info.get(to).add(from);
-        }
-
-        StringTokenizer st = new StringTokenizer(br.readLine());
-        for (int i = 0; i < n; i++) {
-            expect[i] = Integer.parseInt(st.nextToken());
-        }
-
-        dfs(1,0);
-        System.out.println(1);
-    }
-
-    private static void dfs(int current, int index) {
-        visit[current] = true;
-
-        // 현재 값 뒤에 나올 수 있는 값들에 대한 정보를 저장.
-        int count = 0;
-        for (int nextCandidate : info.get(current)) {
-            if (!visit[nextCandidate]) {
-                visit[nextCandidate] = true;
-                parent[nextCandidate] = current;
-                count++;
-            }
-        }
-
-        index++;
-        for (int i = 0; i < count; i++) {
-            int next = expect[index];
-            if (parent[next] != current) {
-                System.out.println(0);
-                System.exit(0);
-            }
-            dfs(next, index);
-        }
-    }
+	static int n;
+	static boolean[] check;
+	static ArrayList<ArrayList<Integer>> list;
+	static int[] expect, parent;
+	static String s1, s2;
+	public static void main(String[] args) throws IOException{
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+		n = Integer.parseInt(br.readLine());
+		StringTokenizer st;
+		check = new boolean[n+1];
+		expect =new int[n+1];
+		parent = new int[n+1];
+		list = new ArrayList<>();
+		for(int i = 0; i <= n; i++) {
+			list.add(new ArrayList<>());
+		}
+		for(int i = 0; i < n-1; i++) {
+			st = new StringTokenizer(br.readLine());
+			int a = Integer.parseInt(st.nextToken());
+			int b = Integer.parseInt(st.nextToken());
+			list.get(a).add(b);
+			list.get(b).add(a);
+		}
+		st = new StringTokenizer(br.readLine());
+		for(int i = 0; i < n; i++) {
+			expect[i] = Integer.parseInt(st.nextToken());
+		}
+		dfs(1, 0);
+		System.out.println(1);
+		br.close();
+	}
+	public static void dfs(int x, int index) {
+		check[x] = true;
+		//정렬 기준 정하기
+		int cnt = 0;
+		for(int i : list.get(x)) {
+			if(!check[i]) {
+				check[i]=true;
+				parent[i] = x;
+				cnt++;
+			}
+		}
+		index++;
+		for(int i = 0; i < cnt; i++) {
+			int next = expect[index];
+			if(parent[next] != x) {
+				System.out.println(0);
+				System.exit(0);
+			}
+			dfs(next, index);
+		}
+	}
 }
