@@ -8,13 +8,11 @@ public class Main {
     static boolean[][] dp;
     public static void main(String[] args) throws IOException {
         int n = Integer.parseInt(br.readLine());
-        int []arr = new int[n + 1];
+        int[]arr = new int[n + 1];
         dp = new boolean[n + 1][n + 1];
-
         StringTokenizer st = new StringTokenizer(br.readLine());
         for(int i = 1 ; i <= n; i++)
             arr[i] = Integer.parseInt(st.nextToken());
-
         solve(arr, n);
         int m = Integer.parseInt(br.readLine());
         StringBuilder sb = new StringBuilder();
