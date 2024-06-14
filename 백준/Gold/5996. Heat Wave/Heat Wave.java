@@ -29,7 +29,6 @@ public class Main {
         dist[s] = 0;
         while(!pq.isEmpty()){
             Node n = pq.poll();
-            if(n.c > dist[n.b]) continue;
             for(Node next : list[n.b]){
                 if(dist[next.b] > dist[n.b] + next.c){
                     dist[next.b] = dist[n.b] + next.c;
