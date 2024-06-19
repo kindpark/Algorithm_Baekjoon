@@ -87,15 +87,15 @@ public class Main{
 		
 	}
 	public static void lazyTree(int node, int start, int end) {
-		if(lazy[node]!=0){ // 만약 현재 노드에 lazy값이 있다면
-            tree[node] += (lazy[node]*(end-start+1)); // 현재노드 업데이트
+		if(lazy[node]!=0){ 
+            tree[node] += (lazy[node]*(end-start+1));
 
-            if(start != end) { // 만약 자식이 있다면 자식들에게 lazy값을 전파한다.
+            if(start != end) {
                 lazy[node * 2] += lazy[node];
                 lazy[node * 2 + 1] += lazy[node];
             }
 
-            lazy[node] = 0; // lazy값을 업데이트했으므로 0으로 만들어준다.
+            lazy[node] = 0; 
         }
 	}
     // 구간 합 구하기
