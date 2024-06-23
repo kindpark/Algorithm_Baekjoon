@@ -1,56 +1,47 @@
 import java.util.*;
-
+import java.io.*;
 public class Main {
-
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        while (true) {
-            int n = scanner.nextInt();
-            int w = scanner.nextInt();
-            if (n == 0 && w == 0) {
+    static int x, y;
+    static int[] histogram;
+    static int high, hhigh;
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        StringTokenizer st;
+        int t=-1,w=-1;
+        double sum = 0;
+        while(true){
+            st = new StringTokenizer(br.readLine());
+            t = Integer.parseInt(st.nextToken());
+            w = Integer.parseInt(st.nextToken());
+            if(t==0 && w == 0){
                 break;
             }
-            int[] values = new int[n];
-            for (int i = 0; i < n; i++) {
-                values[i] = scanner.nextInt();
+            sum = 0.0;
+            high = 0;
+            hhigh = 0;
+            histogram = new int[11];
+            for(int i = 0; i < t; i++) {
+                int x = Integer.parseInt(br.readLine());
+                histogram[x/w]++;
             }
-            double inkUsage = processHistogramData(n, w, values);
-            System.out.printf("%.5f\n", inkUsage);
+            for(int i = 0; i < 11; i++){
+                if(histogram[i]>0){
+                    hhigh = i;
+                }
+                high = Math.max(histogram[i], high);
+            }
+            for(int i = 0; i <= hhigh; i++){
+                sum += cal(i, histogram[i]);
+            }
+            sum += 0.01;
+            System.out.printf("%.5f\n", sum);
         }
-        scanner.close();
+        br.close();
     }
-
-    private static double processHistogramData(int n, int w, int[] values) {
-        int maxValue = Arrays.stream(values).max().orElse(0);
-        int numIntervals = (maxValue / w) + 1;
-        int[] histogram = new int[numIntervals];
-
-        for (int value : values) {
-            int intervalIndex = value / w;
-            histogram[intervalIndex] += 1;
-        }
-
-        int maxHeight = Arrays.stream(histogram).max().orElse(0);
-        double inkUsage = calculateInkUsage(histogram, maxHeight);
-
-        // Adding ink for axes and labels
-        inkUsage += 0.01;
-
-        return inkUsage;
-    }
-
-    private static double calculateInkUsage(int[] histogram, int maxHeight) {
-        double inkUsage = 0.0;
-        int numBars = histogram.length;
-
-        for (int i = 0; i < numBars; i++) {
-            int height = histogram[i];
-            double relativeHeight = (maxHeight > 0) ? (double) height / maxHeight : 0.0;
-            double brightness = (numBars > 1) ? 1.0 - (double) i / (numBars - 1) : 1.0;
-            double inkForBar = relativeHeight * brightness * 1.0;
-            inkUsage += inkForBar;
-        }
-
-        return inkUsage;
+    static double cal(int w, int h){
+        double a = ((double)hhigh - w) / hhigh;
+        double b = ((double) h) /high;
+        return a*b;
     }
 }
